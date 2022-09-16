@@ -38,3 +38,22 @@ function saveKoala( newKoala ){
   // ajax call to server to get koalas
  
 }
+
+function handleUpdate(event) {
+  // const shoeid=$(event.target).parent().parent().data('shoeid');
+  const koalaid=$(event.target).closest('tr').data('koalaid');
+  const transferReady = $(event.target).parent().find('.ready_to_transfer').val();
+  $.ajax({
+    method: 'PUT',
+    url: `/koalas/${koalaid}`, // we have dynamically build /shoes/3
+    data: {
+    ready_to_trasnfer: transferReady
+    }
+  }).then(() => {
+    console.log(`Successfully deleted shoe with id ${koalaid}`);
+    getShoes();
+  }).catch(function(err){
+    console.log(err);
+    alert('Something went wrong in POST');
+  })
+}
