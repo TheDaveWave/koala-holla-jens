@@ -14,6 +14,7 @@ $( document ).ready( function(){
 function setupClickListeners() {
   $('#addButton').on('click', saveKoala);
   $('#viewKoalas').on('click', '.transferBtn',updateKoala);
+  $('#viewKoalas').on('click', '.delete', deleteKoala);
 }
 
 function getKoalas(){
@@ -67,8 +68,16 @@ function saveKoala() {
   });
 }
 
-function deleteKoala() {
-
+function deleteKoala(event) {
+  let koalaid = $(event.target).data('koalaid');
+  $.ajax({
+    method: 'DELETE',
+    url: `/koalas/${koalaid}`
+  }).then((response) => {
+    getKoalas();
+  }).catch((error)=>{
+    console.log(error);
+  });
 }
 
 function updateKoala(event) {
