@@ -11,7 +11,7 @@ koalaRouter.get('/', (req, res) => {
     pool.query(queryText).then((result) => {
         // return the rows from the "koalas" table
         res.send(result.rows);
-    }).catch((error) => {
+    }).catch((error) => {git 
         console.log('Error getting koalas', error);
         res.sendStatus(500);
     });
