@@ -25,6 +25,8 @@ function setupClickListeners() {
     // call saveKoala with the new obejct
     saveKoala( koalaToSend );
   }); 
+
+  $('#viewKoalas').on('click', '.transferBtn',updateKoala);
 }
 
 function getKoalas(){
@@ -53,7 +55,7 @@ function displayKoalas(response) {
       <td>${koala.gender}</td>
       <td>${koala.ready_to_transfer ? 'Y' : 'N'}</td>
       <td>${koala.notes}</td>
-      <td><button data-koalaid="${koala.id}" class="transfer">Ready for Transfer</button></td>
+      <td><button data-transfer="${koala.ready_to_transfer}" data-koalaid="${koala.id}" class="transferBtn">Ready for Transfer</button></td>
       <td><button data-koalaid="${koala.id}" class="delete">Delete</button></td>
     </tr>
     `);
@@ -72,19 +74,23 @@ function deleteKoala() {
 
 function updateKoala(event) {
   // const shoeid=$(event.target).parent().parent().data('shoeid');
-  const koalaid=$(event.target).closest('tr').data('koalaid');
-  const transferReady = $(event.target).parent().find('.ready_to_transfer').val();
+  const koalaid=$(event.target).data('koalaid');
+  const transferReady = $(event.target).data('transfer');
+
+  if(transferReady === false) {
+    console.log(koalaid, transferReady)
   $.ajax({
     method: 'PUT',
     url: `/koalas/${koalaid}`, // we have dynamically build /shoes/3
     data: {
-    ready_to_trasnfer: transferReady
+    ready_to_transfer: !transferReady
     }
   }).then(() => {
     console.log(`Successfully deleted shoe with id ${koalaid}`);
-    getShoes();
+    getKoalas();
   }).catch(function(err){
     console.log(err);
     alert('Something went wrong in POST');
   })
+  }
 }
