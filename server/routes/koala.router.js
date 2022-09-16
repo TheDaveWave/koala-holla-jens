@@ -7,7 +7,7 @@ const pool = require('../modules/pool');
 koalaRouter.get('/', (req, res) => {
     console.log('In GET route /koalas');
     // set variable to sql command
-    let queryText = `SELECT * FROM "koalas";`;
+    let queryText = `SELECT * FROM "koalas" ORDER BY "name";`;
     pool.query(queryText).then((result) => {
         // return the rows from the "koalas" table
         res.send(result.rows);

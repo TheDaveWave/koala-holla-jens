@@ -43,7 +43,7 @@ function displayKoalas(response) {
       <td>${koala.gender}</td>
       <td>${koala.ready_to_transfer ? 'Y' : 'N'}</td>
       <td>${koala.notes}</td>
-      <td><button data-transfer="${koala.ready_to_transfer}" data-koalaid="${koala.id}" class="transferBtn">Ready for Transfer</button></td>
+      <td><button class="transfer-${koala.ready_to_transfer} transferBtn" data-transfer="${koala.ready_to_transfer}" data-koalaid="${koala.id}">Ready for Transfer</button></td>
       <td><button data-koalaid="${koala.id}" class="delete">Delete</button></td>
     </tr>
     `);
