@@ -39,7 +39,13 @@ koalaRouter.post('/', (req, res) => {
 koalaRouter.delete('/:koalaid', (req,res) => {
     console.log('In DELETE route /koalas', req.body, req.params);
     let koalaid = req.params.koalaid;
-    
+    const queryText = `DELETE FROM "koalas" WHERE id=$1 RETURNING *;`;
+    pool.query(queryText, [koalaid]).then((result) => {
+        res.send(result.rows);
+    }).catch((error) => {
+        console.log('Error deleting koala',error);
+        res.sendStatus(500);
+    });
 });
 
 module.exports = koalaRouter;
