@@ -20,10 +20,14 @@ koalaRouter.get('/', (req, res) => {
 // POST
 koalaRouter.post('/', (req, res) => {
     let newKoala = req.body;
+    let transferBoolean = false;
+    if (req.body.ready_to_transfer.toLowerCase() === 'true') {
+        transferBoolean = true;
+    }
     console.log('This is the new Koala(req.body in POST)', newKoala);
     let query = `INSERT INTO "koalas" ("name", "gender", "age", "ready_to_transfer", "notes")
                     VALUES ($1, $2, $3, $4, $5);`;
-    pool.query(query, [req.body.name, req.body.gender, req.body.age, req.body.ready_to_transfer, req.body.notes])
+    pool.query(query, [req.body.name, req.body.gender, req.body.age, transferBoolean, req.body.notes])
         .then(result => {
             res.sendStatus(201);
         }).catch(error => {
