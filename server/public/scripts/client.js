@@ -38,3 +38,11 @@ function saveKoala( newKoala ){
   // ajax call to server to get koalas
  
 }
+
+function deleteKoala() {
+
+}
+
+function updateKoala() {
+
+}
