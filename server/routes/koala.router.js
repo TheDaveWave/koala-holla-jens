@@ -23,5 +23,10 @@ koalaRouter.get('/', (req, res) => {
 
 
 // DELETE
+koalaRouter.delete('/:koalaid', (req,res) => {
+    console.log('In DELETE route /koalas', req.body, req.params);
+    let koalaid = req.params.koalaid;
+    
+});
 
 module.exports = koalaRouter;
