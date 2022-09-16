@@ -30,8 +30,35 @@ function setupClickListeners() {
 function getKoalas(){
   console.log( 'in getKoalas' );
   // ajax call to server to get koalas
+  $.ajax({
+    method: 'GET',
+    url: '/koalas'
+  }).then((response) => {
+    displayKoalas(response);
+  }).catch((error) => {
+    console.log(error);
+  })
   
 } // end getKoalas
+
+// display the koalas on the DOM.
+function displayKoalas(response) {
+  // empty out table body
+  $('#viewKoalas').empty();
+  for(let koala of response) {
+    $('#viewKoalas').append(`
+    <tr>
+      <td>${koala.name}</td>
+      <td>${koala.age}</td>
+      <td>${koala.gender}</td>
+      <td>${koala.ready_to_transfer ? 'Y' : 'N'}</td>
+      <td>${koala.notes}</td>
+      <td><button data-koalaid="${koala.id}" class="transfer">Ready for Transfer</button></td>
+      <td><button data-koalaid="${koala.id}" class="delete">Delete</button></td>
+    </tr>
+    `);
+  }
+}
 
 function saveKoala( newKoala ){
   console.log( 'in saveKoala', newKoala );
@@ -39,7 +66,11 @@ function saveKoala( newKoala ){
  
 }
 
-function handleUpdate(event) {
+function deleteKoala() {
+
+}
+
+function updateKoala(event) {
   // const shoeid=$(event.target).parent().parent().data('shoeid');
   const koalaid=$(event.target).closest('tr').data('koalaid');
   const transferReady = $(event.target).parent().find('.ready_to_transfer').val();
